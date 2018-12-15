@@ -1,28 +1,24 @@
 #include <cstdio>
-//#include <cstring>
 #include <algorithm>
-//#include <ctime>
+#include <vector>
 using namespace std;
-int dp[40000];
+vector<int> v;
 int main()
 {
-    //freopen("..\\file\\input.txt","r",stdin);
-    //freopen("..\\file\\output.txt","w",stdout);
-    /*clock_t start_c,end_c;
-    start_c=clock();*/
+    //freopen("input.txt","r",stdin);
     int T,a;
     scanf("%d",&T);
     while(T--){
         int n;
-        scanf("%d",&n);
-        fill(dp,dp+n,2147483647);
-        for(int i=0;i!=n;++i){
+        v.clear();
+        scanf("%d%d",&n,&a);
+        v.push_back(a);
+        for(int i=1;i!=n;++i){
             scanf("%d",&a);
-            *upper_bound(dp,dp+n,a)=a;
+            if(a>v.back()) v.push_back(a);
+            else *upper_bound(v.begin(),v.end(),a)=a;
         }
-        printf("%d\n",lower_bound(dp,dp+n,2147483647)-dp);
+        printf("%d\n",v.size());
     }
-    /*end_c=clock();
-    printf("Use %.0lf ms\n", (((double)(end_c-start_c))/CLOCKS_PER_SEC)*1000);*/
     return 0;
 }
