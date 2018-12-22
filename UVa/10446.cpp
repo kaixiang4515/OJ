@@ -11,7 +11,7 @@ ULL trib(int n, int b){
     if(n<=1) return f[n][b]=1;
     for(int i=1;i<=b;++i)
         f[n][b]+=trib(n-i,b);
-    return ++f[n][b];
+    return ++f[n][b]; //自身的次數
 }
 int main()
 {
