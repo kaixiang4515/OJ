@@ -37,11 +37,6 @@ int main()
         memset(a,-1,sizeof(a));
         a[n][1]=in;
         printf("%lld\n",f(1,n));
-        /*for(int i=0;i<=n;++i){
-            printf("i = %d: ",i);
-            for(int j=0;j<=n;++j) printf("%d ",a[i][j]);
-            printf("\n");
-        }*/
     }
     /*end_c=clock();
     printf("Use %.0lf ms\n", (((double)(end_c-start_c))/CLOCKS_PER_SEC)*1000);*/
