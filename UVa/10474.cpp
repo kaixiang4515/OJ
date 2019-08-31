@@ -45,3 +45,40 @@ int main()
     return 0;
 }
 
+#include <iostream>
+#include <cstdio>
+//#include <bits/stdc++.h>
+#include <cstring>
+#include <algorithm>
+#define Inf 0x3f3f3f3f
+#define NeInf 0xc0c0c0c0
+using namespace std;
+const int MAX_N=10000;
+int a[MAX_N],cnt[MAX_N+1],lo[MAX_N+1];
+int main()
+{
+    //freopen("..\\file\\input_ascii.txt","r",stdin);
+    //freopen("..\\file\\output.txt","w",stdout);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int n,q,ca=0;
+    while(cin >> n >> q && n){
+        for(int i=0;i<n;++i)
+            cin >> a[i];
+        memset(cnt,0,sizeof(cnt));
+        memset(lo,0,sizeof(lo));
+        for(int i=0;i<n;++i)
+            ++cnt[a[i]];
+        lo[0]=cnt[0];
+        for(int i=1;i<=MAX_N;++i)
+            lo[i]+=cnt[i]+lo[i-1];
+        cout << "CASE# " << ++ca << ":\n";
+        while(q--){
+            int t;
+            cin >> t;
+            if(cnt[t]) cout << t << " found at " << lo[t]-cnt[t]+1 << "\n";
+            else cout << t << " not found\n";
+        }
+    }
+    return 0;
+}
