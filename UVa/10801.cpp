@@ -1,3 +1,7 @@
+/***	
+	Dijkstra
+***/
+
 //#include <iostream>
 //#include <cstdio>
 #include <bits/stdc++.h>
@@ -85,3 +89,73 @@ int main()
     return 0;
 }
 
+/***
+	Bellman-Ford
+***/
+
+//#include <iostream>
+//#include <cstdio>
+#include <bits/stdc++.h>
+#define Inf 0x3f3f3f3f
+#define NeInf 0xc0c0c0c0
+
+using namespace std;
+
+int d[105];
+vector<int> V;
+int G[105][105];    //adjacency matrix
+
+void bellman_ford(int source){
+    memset(d,Inf,sizeof(d));
+    d[source] = 0;
+
+    for(int i=0;i<100;++i){
+        d[i] = min(d[i], G[0][i]);
+    }
+
+    for(int i=0;i<100-1;++i){
+        for(int u=0;u<100;++u){
+            if(d[u] == Inf) continue;
+
+            for(int v=0;v<100;++v){
+                d[v] = min(d[v], d[u] + G[u][v] + 60);
+            }
+        }
+    }
+}
+
+int main()
+{
+    //freopen("../file/input_ascii.txt","r",stdin);
+    //freopen("../file/output.txt","w",stdout);
+    //ios::sync_with_stdio(0);
+    //cin.tie(0);
+    int n,k;
+    while(cin >> n >> k){
+        int t[5];
+        for(int i=0;i<n;++i) cin >> t[i];
+        cin.get();
+        memset(G,Inf,sizeof(G));
+        for(int i=0;i<n;++i){
+            string s;
+            getline(cin, s);
+            stringstream ss(s);
+            int a;
+            V.clear();
+            while(ss >> a) V.push_back(a);
+
+            for(int p=0;p<V.size();++p){
+                for(int q=p+1;q<V.size();++q)
+                    G[ V[p] ][ V[q] ] = G[ V[q] ][ V[p] ] = min(t[i]*abs( V[p] - V[q] ), G[ V[p] ][ V[q] ]);  // preprocessing without change elevator
+            }
+        }
+
+        bellman_ford(0);
+
+        if(d[k] == Inf) cout << "IMPOSSIBLE\n";
+        else cout << d[k] << "\n";
+    }
+    //fclose(stdin);
+    //fclose(stdout);
+    return 0;
+}
