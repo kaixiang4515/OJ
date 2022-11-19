@@ -1,25 +1,34 @@
-#include <cstdio>
-#include <cstring>
+// #include <bits/stdc++.h>
 #include <algorithm>
-//#include <ctime>
+#include <cstdio>
+#include <iomanip>
+#include <iostream>
+#define Inf 0x3f3f3f3f
+#define NeInf 0xc0c0c0c0
+#define REP(i, n) for (int i = 0; i < int(n); ++i)
+
 using namespace std;
-long long f[10001]={1};
-int main()
-{
-    //freopen("..\\file\\input.txt","r",stdin);
-    //freopen("..\\file\\output.txt","w",stdout);
-    /*clock_t start_c,end_c;
-    start_c=clock();*/
+using LL = long long;
+
+LL a[10005] = {1};
+
+int main() {
+#ifdef LOCAL
+    freopen("../file/in.txt", "r", stdin);
+    freopen("../file/out.txt", "w", stdout);
+#endif  // LOCAL
+    ios::sync_with_stdio(0);
+    // cin.tie(0);
+    // cout << fixed << setprecision(3);
+    REP(i, 10000) {
+        int t = i + 1;
+        a[t] = a[i] * t;
+        while (!(a[t] % 10)) a[t] /= 10;
+        a[t] %= int(1e6);  // 5^5 = 3125 < 10000 < 5^6 = 15625, 一次最多產生5個0, 所以取後6位
+    }
     int n;
-    for(int i=1;i!=10001;++i){
-        f[i]=f[i-1]*i;
-        while(f[i]%10==0) f[i]/=10;
-        f[i]%=1000000;
+    while (cin >> n) {
+        cout << setw(5) << n << " -> " << a[n] % 10 << "\n";
     }
-    while(~scanf("%d",&n)){
-        printf("%5d -> %lld\n",n,f[n]%10);
-    }
-    /*end_c=clock();
-    printf("Use %.0lf ms\n", (((double)(end_c-start_c))/CLOCKS_PER_SEC)*1000);*/
     return 0;
 }

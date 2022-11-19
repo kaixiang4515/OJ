@@ -1,41 +1,41 @@
-#include <cstdio>
-#include <cstring>
-#include <algorithm>
-//#include <ctime>
+//#include <bits/stdc++.h>
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#define Inf 0x3f3f3f3f
+#define NeInf 0xc0c0c0c0
+#define REP(i,n) for(int i=0;i<int(n);++i)
+
 using namespace std;
-int s[2600];
-int main()
-{
-    //freopen("..\\file\\input.txt","r",stdin);
-    //freopen("..\\file\\output.txt","w",stdout);
-    /*clock_t start_c,end_c;
-    start_c=clock();*/
-    int n,k;
-    while(~scanf("%d",&n)){
-        printf("%d!\n",n);
-        memset(s,0,sizeof(s));
-        s[k=0]=1;
-        if(!n || n==1){
-            printf("1\n");
-            continue;
+using LL = long long;
+vector<int> v[1005];
+
+int main(){
+    ios::sync_with_stdio(0);
+    //cin.tie(0);
+    //cout << fixed << setprecision(3);
+    //freopen("../file/in.txt","r",stdin);
+    //freopen("../file/out.txt","w",stdout);
+    int n;
+    const int Base = 100000000, Width = 8;
+
+    v[0].push_back(1);
+    for(int i = 1; i <= 1000; ++i) {
+        int t = 0;
+        for(int j = 0; j < v[i-1].size(); ++j) {
+            LL x = 1LL * v[i-1][j] * i + t;
+            t = x / Base;
+            v[i].push_back(x % Base);
         }
-        for(int i=2;i<=n;++i){
-            for(int j=0;j<=k;++j) s[j]*=i;
-            for(int j=0,t=0;;++j){
-                s[j]+=t;
-                t=s[j]/10;
-                s[j]%=10;
-                if(!t && j>=k){
-                    k=max(k,j);
-                    break;
-                }
-            }
-        }
-        for(;k>=0;--k) printf("%d",s[k]);
-        printf("\n");
+        if(t) v[i].push_back(t);
     }
-    /*end_c=clock();
-    printf("Use %.0lf ms\n", (((double)(end_c-start_c))/CLOCKS_PER_SEC)*1000);*/
+
+    while(cin >> n) {
+        cout << n << "!\n";
+        int i = v[n].size()-1;
+        cout << v[n][i--];
+        while(i >= 0) cout << setw(8) << setfill('0') << v[n][i--];
+        cout << "\n";
+    }
     return 0;
 }
-
